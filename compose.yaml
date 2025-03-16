@@ -1,0 +1,54 @@
+
+services:
+  db:
+    container_name: database
+    image: postgres
+    restart: always
+    ports:
+      - 9432:5432
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    env_file:
+      - .env
+
+  django:
+    container_name: application
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DJANGO_SUPERUSER_PASSWORD: ${DJANGO_SUPERUSER_PASSWORD}
+      DJANGO_SUPERUSER_USERNAME: ${DJANGO_SUPERUSER_USERNAME}
+      DJANGO_SUPERUSER_EMAIL: ${DJANGO_SUPERUSER_EMAIL}
+      DJANGO_SUPERUSER_BIRTHDATE: ${DJANGO_SUPERUSER_BIRTHDATE}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      DJANGO_DEBUG: ${DJANGO_DEBUG}
+      DJANGO_LOGLEVEL: ${DJANGO_LOGLEVEL}
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
+      DATABASE_ENGINE: ${DATABASE_ENGINE}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      CONTAINER_HOST: ${CONTAINER_HOST}
+      CONTAINER_PORT: ${CONTAINER_PORT}
+
+    command: >
+      sh -c  "python manage.py makemigrations &&
+              python manage.py migrate &&
+              python manage.py flush --noinput &&
+              python manage.py createsuperuser --noinput &&
+              python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ${HOST_VOLUME}:/workapp
+    env_file:
+      - .env
+
+volumes:
+  pgdata:
+  django:
