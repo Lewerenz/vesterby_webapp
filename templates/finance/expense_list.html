@@ -6,20 +6,36 @@
 
 <table border="1">
 
-<tbody>
-    {% for expense in object_list %}
-    <tr>
-    <td>{{ expense.id }}</td>
-    <td>{{ expense.name }}</td>
-    <td>{{ expense.user }}</td>
-    <td>{{ expense.costcenter }}</td>
-    <td>{{ expense.amount }}</td>
-    <td><a href="{% url 'expense_read' expense.id %}"><span class="glyphicon glyphicon-eye-open"></span></a></td>
-    <td><a href="{% url 'expense_update' expense.id %}"><span class="glyphicon glyphicon-edit"></span></a></td>
-    <td><a href="{% url 'expense_delete' expense.id %}"><span class="glyphicon glyphicon-trash"></span></a></td>
-    </tr>
-    {% endfor %}
-</tbody>
+    <tbody>
+        {% for expense in object_list %}
+        <tr>
+            <td>{{ expense.id }}</td>
+            <td>{{ expense.name }}</td>
+            <td>{{ expense.user }}</td>
+            <td>{{ expense.costcenter }}</td>
+            <td>{{ expense.amount }}</td>
+            <td><a href="{% url 'expense_read' expense.id %}"><span class="glyphicon glyphicon-eye-open"></span></a></td>
+            <td><a href="{% url 'expense_update' expense.id %}"><span class="glyphicon glyphicon-edit"></span></a></td>
+            <td><a href="{% url 'expense_delete' expense.id %}"><span class="glyphicon glyphicon-trash"></span></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
 
 </table>
+
+{% for expense in object_list %}
+
+<div class="card">
+    <h5 class="card-header">{{ expense.name }}</h5>
+    <div class="card-body">
+      <h5 class="card-title">{{ expense.costcenter }}</h5>
+      <p class="card-text">{{ expense.user }} hat {{ expense.amount }} für {{ expense.costcenter }} bezahlt</p>
+      <a href="{% url 'expense_delete' expense.id %}" class="card-link">Löschen</a>
+      <a href="{% url 'expense_update' expense.id %}" class="card-link">Ändern</a>
+    </div>
+  </div>
+
+{% endfor %}
+
+
 {% endblock %}
