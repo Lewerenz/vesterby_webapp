@@ -1,0 +1,25 @@
+{% extends "home.html" %}
+
+{% block content %}
+
+<a href="{% url 'expense_create' %}">create</a>
+
+<table border="1">
+
+<tbody>
+    {% for expense in object_list %}
+    <tr>
+    <td>{{ expense.id }}</td>
+    <td>{{ expense.name }}</td>
+    <td>{{ expense.user }}</td>
+    <td>{{ expense.costcenter }}</td>
+    <td>{{ expense.amount }}</td>
+    <td><a href="{% url 'expense_read' expense.id %}"><span class="glyphicon glyphicon-eye-open"></span></a></td>
+    <td><a href="{% url 'expense_update' expense.id %}"><span class="glyphicon glyphicon-edit"></span></a></td>
+    <td><a href="{% url 'expense_delete' expense.id %}"><span class="glyphicon glyphicon-trash"></span></a></td>
+    </tr>
+    {% endfor %}
+</tbody>
+
+</table>
+{% endblock %}
