@@ -8,7 +8,7 @@ from .managers import CustomUserManager
 class CustomUser(AbstractUser):
     #username = None
     email = models.EmailField(_("email address"), unique=True)
-    birthdate = models.DateField()
+    birthdate = models.DateField(null=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
