@@ -1,0 +1,49 @@
+<!-- templates/home.html -->
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="{% url 'home' %}">Vesterby</a>
+    </div>
+    {% if user.is_authenticated %}
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="{% url 'detail' %}">detail</a></li>
+      <li><a href="{% url 'expense_list' %}">Finace</a></li>
+    </ul>
+    
+    
+    <ul class="nav navbar-nav navbar-right">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ user.username }} <span class="glyphicon glyphicon-user"></span></a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+          <li><a class="dropdown-item" href="{% url 'password_reset' %}">Password Reset</a></li>
+        </ul>
+      </li>
+    </ul>
+
+   
+    {% else %}
+
+    <ul class="nav navbar-nav navbar-right">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          <li><a href="{% url 'signup' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    {% endif %}
+  </div>
+</nav>
+{% endblock %}
+
+{%block content %}
+{% endblock %}
