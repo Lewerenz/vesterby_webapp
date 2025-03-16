@@ -1,0 +1,19 @@
+{% extends "home.html" %}
+
+{% block content %}
+
+
+<table border="1">
+
+    <tbody>
+        {% for kost in kosten %}
+        <tr>
+            <td>{{ kost.gesamtkosten }}</td>
+            <td>{{ kost.costcenter }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+{% endblock %}

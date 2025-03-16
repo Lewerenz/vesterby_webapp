@@ -79,4 +79,31 @@ def detail(request):
     # return HttpResponse(
     #                     )
 
-    return render(request, 'finance/personalcostcenter.html', {'string': string})              
+    return render(request, 'finance/personalcostcenter.html', {'string': string})            
+
+def my_costs(request):
+
+    kosten_list = []
+
+    user = request.user
+    sharings = Sharing.objects.filter(user=user)
+
+    for share in sharings:
+
+        kosten = {}
+
+        costcenter = share.costcenter
+        costs = Expense.objects.filter(costcenter=costcenter).aggregate(Sum('amount', default=0))['amount__sum']
+        sharing = Sharing.objects.filter(costcenter=costcenter).aggregate(Sum('share', default=0))['share__sum']
+
+        fak = costs/sharing
+
+        share = Sharing.objects.filter(user=user).filter(costcenter = costcenter).aggregate(Sum('share', default=0))['share__sum']
+        gesamtkosten = fak * share
+
+        kosten['gesamtkosten'] = gesamtkosten
+        kosten['costcenter'] = costcenter
+
+        kosten_list.append(kosten)
+
+    return render(request, 'finance/mycosts.html', {'kosten': kosten_list})

@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     path('Costcenter/<slug:pk>/', views.CostcenterDetailView.as_view()),
-    path('', views.detail, name="detail"),
+    path('', views.my_costs, name="detail"),
 
     path('expense/create', views.ExpenseCreateView.as_view(), name='expense_create'),
     path('expense/read/<int:pk>', views.ExpenseReadView.as_view(), name='expense_read'),
