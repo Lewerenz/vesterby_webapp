@@ -2,9 +2,18 @@
 
 {% block content %}
 
+<div class="card">
+  <h5 class="card-header">Featured</h5>
+  <div class="card-body">
+    <h5 class="card-title">Special title treatment</h5>
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+
 <a href="{% url 'expense_create' %}">create</a>
 
-<table border="1">
+<table class="table">
 
     <tbody>
         {% for expense in object_list %}
@@ -36,6 +45,10 @@
   </div>
 
 {% endfor %}
+
+<div class="d-grid gap-2">
+  <a class="btn btn-primary" href="{% url 'expense_create' %}" role="button">Ausgabe Hinzufügen</a>
+</div>
 
 
 {% endblock %}

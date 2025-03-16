@@ -1,8 +1,16 @@
 {% extends "home.html" %}
 
+{% load django_bootstrap5 %}
+
 {% block content %}
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit" />
+
+<form method="post">
+    {% csrf_token %}
+
+    {% bootstrap_form form layout=layout size=size %}
+
+    {% bootstrap_button button_type="submit" content="OK" %}
+    {% bootstrap_button button_type="reset" content="Cancel" %}
 </form>
+
 {% endblock %}
