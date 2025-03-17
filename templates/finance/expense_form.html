@@ -4,13 +4,17 @@
 
 {% block content %}
 
+<div class = " m-4">
+
 <form method="post">
     {% csrf_token %}
 
     {% bootstrap_form form layout=layout size=size %}
 
     {% bootstrap_button button_type="submit" content="OK" %}
-    {% bootstrap_button button_type="reset" content="Cancel" %}
+    {% bootstrap_button button_type="reset" content="RESET" %}
 </form>
+
+</div>
 
 {% endblock %}

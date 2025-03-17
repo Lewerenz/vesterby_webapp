@@ -2,53 +2,26 @@
 
 {% block content %}
 
-<div class="card">
-  <h5 class="card-header">Featured</h5>
-  <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-</div>
-
-<a href="{% url 'expense_create' %}">create</a>
-
-<table class="table">
-
-    <tbody>
-        {% for expense in object_list %}
-        <tr>
-            <td>{{ expense.id }}</td>
-            <td>{{ expense.name }}</td>
-            <td>{{ expense.user }}</td>
-            <td>{{ expense.costcenter }}</td>
-            <td>{{ expense.amount }}</td>
-            <td><a href="{% url 'expense_read' expense.id %}"><span class="glyphicon glyphicon-eye-open"></span></a></td>
-            <td><a href="{% url 'expense_update' expense.id %}"><span class="glyphicon glyphicon-edit"></span></a></td>
-            <td><a href="{% url 'expense_delete' expense.id %}"><span class="glyphicon glyphicon-trash"></span></a></td>
-        </tr>
-        {% endfor %}
-    </tbody>
-
-</table>
+<div>
 
 {% for expense in object_list %}
 
-<div class="card">
+<div class="card m-4">
     <h5 class="card-header">{{ expense.name }}</h5>
     <div class="card-body">
       <h5 class="card-title">{{ expense.costcenter }}</h5>
       <p class="card-text">{{ expense.user }} hat {{ expense.amount }} für {{ expense.costcenter }} bezahlt</p>
       <a href="{% url 'expense_delete' expense.id %}" class="card-link">Löschen</a>
       <a href="{% url 'expense_update' expense.id %}" class="card-link">Ändern</a>
+      <a href="{% url 'expense_read' expense.id %}" class="card-link">Details</a>
     </div>
   </div>
 
 {% endfor %}
 
-<div class="d-grid gap-2">
+<div class="mx-auto p-2" style="width: 200px;">
   <a class="btn btn-primary" href="{% url 'expense_create' %}" role="button">Ausgabe Hinzufügen</a>
 </div>
 
-
+</div>
 {% endblock %}
