@@ -11,12 +11,70 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from .models import CostCenter, Sharing, Expense
+from .models import CostCenter, Share, Expense
 from users.models import CustomUser
 
 
-class CostcenterDetailView(DetailView):
+## CostCenter
+# Create
+class CostCenterCreateView(LoginRequiredMixin, CreateView):
     model = CostCenter
+    fields = '__all__'
+    success_url = reverse_lazy('costcenter_list')
+
+# Read
+class CostCenterReadView(LoginRequiredMixin, DetailView):
+    model = CostCenter
+
+# Update
+class CostCenterUpdateView(LoginRequiredMixin, UpdateView):
+    model = CostCenter
+    fields = '__all__'
+    success_url = reverse_lazy('costcenter_list')
+
+# Delete
+class CostCenterDeleteView(LoginRequiredMixin, DeleteView):
+    model = CostCenter
+    success_url = reverse_lazy('costcenter_list')
+
+# List
+class CostCenterList(LoginRequiredMixin, ListView):
+    model = CostCenter
+
+    def get_queryset(self):
+        new_context = CostCenter.objects.filter(user=self.request.user)
+        return new_context
+
+
+## Share
+# Create
+class ShareCreateView(LoginRequiredMixin, CreateView):
+    model = Share
+    fields = '__all__'
+    success_url = reverse_lazy('share_list')
+
+# Read
+class ShareReadView(LoginRequiredMixin, DetailView):
+    model = Share
+
+# Update
+class ShareUpdateView(LoginRequiredMixin, UpdateView):
+    model = Share
+    fields = '__all__'
+    success_url = reverse_lazy('share_list')
+
+# Delete
+class ShareDeleteView(LoginRequiredMixin, DeleteView):
+    model = Share
+    success_url = reverse_lazy('share_list')
+
+# List
+class ShareList(LoginRequiredMixin, ListView):
+    model = Share
+
+    def get_queryset(self):
+        new_context = Share.objects.filter(user=self.request.user)
+        return new_context
 
 ## Expense
 # Create
@@ -49,8 +107,6 @@ class ExpenseList(LoginRequiredMixin, ListView):
         return new_context
 
 
-
-
 # def detail(request):
 
 #     d = CustomUser.objects.get(pk=2).costcenter_set.get(pk=1).payment_set.get(pk=1)
@@ -64,10 +120,10 @@ def detail(request):
     user = request.user
     costcenter = CostCenter.objects.get(pk=3)
 
-    share = Sharing.objects.filter(user=user).filter(costcenter = costcenter).aggregate(Sum('share', default=0))['share__sum']
+    share = Share.objects.filter(user=user).filter(costcenter = costcenter).aggregate(Sum('share', default=0))['share__sum']
     costs = Expense.objects.filter(costcenter=costcenter).aggregate(Sum('amount', default=0))['amount__sum']
     payments = Expense.objects.filter(user=user).filter(costcenter=costcenter).aggregate(Sum('amount', default=0))['amount__sum']
-    sharing = Sharing.objects.filter(costcenter=costcenter).aggregate(Sum('share', default=0))['share__sum']
+    sharing = Share.objects.filter(costcenter=costcenter).aggregate(Sum('share', default=0))['share__sum']
 
     fak = costs/sharing
     gesamtkosten = fak * share
@@ -86,7 +142,7 @@ def my_costs(request):
     kosten_list = []
 
     user = request.user
-    sharings = Sharing.objects.filter(user=user)
+    sharings = Share.objects.filter(user=user)
 
     for share in sharings:
 
@@ -94,11 +150,11 @@ def my_costs(request):
 
         costcenter = share.costcenter
         costs = Expense.objects.filter(costcenter=costcenter).aggregate(Sum('amount', default=0))['amount__sum']
-        sharing = Sharing.objects.filter(costcenter=costcenter).aggregate(Sum('share', default=0))['share__sum']
+        sharing = Share.objects.filter(costcenter=costcenter).aggregate(Sum('share', default=0))['share__sum']
 
         fak = costs/sharing
 
-        share = Sharing.objects.filter(user=user).filter(costcenter = costcenter).aggregate(Sum('share', default=0))['share__sum']
+        share = Share.objects.filter(user=user).filter(costcenter = costcenter).aggregate(Sum('share', default=0))['share__sum']
         gesamtkosten = fak * share
 
         kosten['gesamtkosten'] = gesamtkosten
