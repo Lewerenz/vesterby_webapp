@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import event, presence
+from .models import Event, Visit
 
-admin.site.register(event)
-admin.site.register(presence)
+admin.site.register(Event)
+admin.site.register(Visit)
