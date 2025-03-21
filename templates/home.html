@@ -16,27 +16,36 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'expense_list' %}">Ausgaben</a>
-        </li>
+
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Finanzen</a>
-          <div class="dropdown-menu">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Finanzen</a>
+          <ul class="dropdown-menu">
             <a class="dropdown-item" href="{% url 'costcenter_list' %}">Kostenstellen</a>
             <a class="dropdown-item" href="{% url 'share_list' %}">Beteiligungen</a>
             <a class="dropdown-item" href="{% url 'expense_list' %}">Ausgaben</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Überweisungen</a>
-          </div>
+          </ul>
         </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Termine</a>
+          <ul class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'event_list' %}">Events</a>
+            <a class="dropdown-item" href="{% url 'visit_list' %}">Aufenthalte</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item disabled" href="#">Überweisungen</a>
+          </ul>
+        </li>
+
         <li class="nav-item">
-          <a class="nav-link" href="#">Kostenstellen</a>
+          <a class="nav-link" href="#">Bilder</a>
         </li>
       </ul>
 
       <ul class="nav justify-content-end">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">{{ user.username }} <i class="bi bi-person-circle" style="font-size: 1rem; color: rgb(255,255,255);"></i></a>
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">{{ user.username }} <i class="bi bi-person-circle"></i></a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>

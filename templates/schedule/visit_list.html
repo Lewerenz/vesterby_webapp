@@ -1,0 +1,27 @@
+{% extends "home.html" %}
+
+{% block content %}
+
+<div>
+
+{% for object in object_list %}
+
+<div class="card m-4">
+    <h5 class="card-header">{{ object.name }}</h5>
+    <div class="card-body">
+      <h5 class="card-title">{{ object.id }}</h5>
+      <p class="card-text">bezahlt</p>
+      <a href="{% url 'visit_delete' object.id %}" class="card-link">Löschen</a>
+      <a href="{% url 'visit_update' object.id %}" class="card-link">Ändern</a>
+      <a href="{% url 'visit_read' object.id %}" class="card-link">Details</a>
+    </div>
+  </div>
+
+{% endfor %}
+
+<div class="mx-auto p-2" style="width: 200px;">
+  <a class="btn btn-primary" href="{% url 'visit_create' %}" role="button">Aufenthalt Hinzufügen</a>
+</div>
+
+</div>
+{% endblock %}
