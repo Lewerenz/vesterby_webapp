@@ -41,10 +41,6 @@ class CostCenterDeleteView(LoginRequiredMixin, DeleteView):
 class CostCenterList(LoginRequiredMixin, ListView):
     model = CostCenter
 
-    def get_queryset(self):
-        new_context = CostCenter.objects.filter(user=self.request.user)
-        return new_context
-
 
 ## Share
 # Create
@@ -73,7 +69,7 @@ class ShareList(LoginRequiredMixin, ListView):
     model = Share
 
     def get_queryset(self):
-        new_context = Share.objects.filter(user=self.request.user)
+        new_context = self.model.objects.filter(user=self.request.user)
         return new_context
 
 ## Expense
@@ -103,7 +99,7 @@ class ExpenseList(LoginRequiredMixin, ListView):
     model = Expense
 
     def get_queryset(self):
-        new_context = Expense.objects.filter(user=self.request.user)
+        new_context = self.model.objects.filter(user=self.request.user)
         return new_context
 
 
