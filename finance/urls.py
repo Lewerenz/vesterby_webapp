@@ -5,7 +5,7 @@ from . import views
 urlpatterns = [
     path('', views.my_costs, name="detail"),
 
-    path('ostcenter/create', views.CostCenterCreateView.as_view(), name='costcenter_create'),
+    path('costcenter/create', views.CostCenterCreateView.as_view(), name='costcenter_create'),
     path('costcenter/read/<int:pk>', views.CostCenterReadView.as_view(), name='costcenter_read'),
     path('costcenter/update/<int:pk>', views.CostCenterUpdateView.as_view(), name='costcenter_update'),
     path('costcenter/delete/<int:pk>', views.CostCenterDeleteView.as_view(), name='costcenter_delete'),
