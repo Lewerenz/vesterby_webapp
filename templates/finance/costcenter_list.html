@@ -4,23 +4,23 @@
 
 <div>
 
-{% for expense in object_list %}
+{% for object in object_list %}
 
 <div class="card m-4">
-    <h5 class="card-header">{{ expense.name }}</h5>
+    <h5 class="card-header">{{ object.name }}</h5>
     <div class="card-body">
-      <h5 class="card-title">{{ expense.costcenter }}</h5>
-      <p class="card-text">{{ expense.user }} hat {{ expense.amount }} für {{ expense.costcenter }} bezahlt</p>
-      <a href="{% url 'expense_delete' expense.id %}" class="card-link">Löschen</a>
-      <a href="{% url 'expense_update' expense.id %}" class="card-link">Ändern</a>
-      <a href="{% url 'expense_read' expense.id %}" class="card-link">Details</a>
+      <h5 class="card-title">{{ object.id }}</h5>
+      <p class="card-text">bezahlt</p>
+      <a href="{% url 'costcenter_delete' object.id %}" class="card-link">Löschen</a>
+      <a href="{% url 'costcenter_update' object.id %}" class="card-link">Ändern</a>
+      <a href="{% url 'costcenter_read' object.id %}" class="card-link">Details</a>
     </div>
   </div>
 
 {% endfor %}
 
 <div class="mx-auto p-2" style="width: 200px;">
-  <a class="btn btn-primary" href="{% url 'expense_create' %}" role="button">Ausgabe Hinzufügen</a>
+  <a class="btn btn-primary" href="{% url 'costcenter_create' %}" role="button">Kostenstelle Hinzufügen</a>
 </div>
 
 </div>
