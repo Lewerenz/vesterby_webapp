@@ -14,6 +14,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import CostCenter, Share, Expense
 from users.models import CustomUser
 
+import calendar
+
 
 ## CostCenter
 # Create
@@ -109,29 +111,26 @@ class ExpenseList(LoginRequiredMixin, ListView):
 #     # write your view processing logics here
 #     return HttpResponse("Welcome to Dashboard" + str(d.amount))
 
+class CustomHTMLCal(calendar.HTMLCalendar):
+    cssclasses = [style + " text-red" for style in calendar.HTMLCalendar.cssclasses]
+    #cssclasses = ["mon text-bold", "tue", "wed", "thu", "fri", "sat", "sun red"]
+    cssclass_month_head = "text-center month-head"
+    cssclass_month = "text-center month"
+    cssclass_year = "text-center text-italic lead"
+    cssclass_year_head = "table"
+
+
+
+
 def detail(request):
 
-    print(request.user)
+    kalenderblatt = CustomHTMLCal(calendar.MONDAY)
+    ausgabe = kalenderblatt.formatyear(2025,3)
 
-    user = request.user
-    costcenter = CostCenter.objects.get(pk=3)
+    for day_number in kalenderblatt.iterweekdays():
+        print(day_number)
 
-    share = Share.objects.filter(user=user).filter(costcenter = costcenter).aggregate(Sum('share', default=0))['share__sum']
-    costs = Expense.objects.filter(costcenter=costcenter).aggregate(Sum('amount', default=0))['amount__sum']
-    payments = Expense.objects.filter(user=user).filter(costcenter=costcenter).aggregate(Sum('amount', default=0))['amount__sum']
-    sharing = Share.objects.filter(costcenter=costcenter).aggregate(Sum('share', default=0))['share__sum']
-
-    fak = costs/sharing
-    gesamtkosten = fak * share
-    minuseigen = gesamtkosten -payments
-
-    string = ' | User: ' + user.username + ' | share: ' + str(share) + ' | CostCenter: ' + costcenter.name + ' | costs: ' + str(costs) + ' | sharing: ' +  str(sharing) + ' | fak: ' +  str(fak) + ' | gesamtkosten: ' +  str(gesamtkosten) + ' | minuseigen: ' +  str(minuseigen)
-
-    # write your view processing logics here
-    # return HttpResponse(
-    #                     )
-
-    return render(request, 'finance/personalcostcenter.html', {'string': string})            
+    return render(request, 'finance/calendar.html', {'calendar': ausgabe})    
 
 def my_costs(request):
 

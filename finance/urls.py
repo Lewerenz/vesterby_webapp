@@ -3,7 +3,7 @@ from django.urls import path
 from . import views 
 
 urlpatterns = [
-    path('', views.my_costs, name="detail"),
+    path('', views.detail, name="detail"),
 
     path('costcenter/create', views.CostCenterCreateView.as_view(), name='costcenter_create'),
     path('costcenter/read/<int:pk>', views.CostCenterReadView.as_view(), name='costcenter_read'),
