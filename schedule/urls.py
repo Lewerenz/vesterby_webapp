@@ -3,6 +3,7 @@ from django.urls import path
 from . import views 
 
 urlpatterns = [
+    path('', views.detail, name='schedule'),
     
     path('event/create', views.EventCreateView.as_view(), name='event_create'),
     path('event/read/<int:pk>', views.EventReadView.as_view(), name='event_read'),

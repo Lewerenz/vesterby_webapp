@@ -20,6 +20,7 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Finanzen</a>
           <ul class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'finance' %}">Übersicht</a>
             <a class="dropdown-item" href="{% url 'costcenter_list' %}">Kostenstellen</a>
             <a class="dropdown-item" href="{% url 'share_list' %}">Beteiligungen</a>
             <a class="dropdown-item" href="{% url 'expense_list' %}">Ausgaben</a>
@@ -31,6 +32,7 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Termine</a>
           <ul class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'schedule' %}">Übersicht</a>
             <a class="dropdown-item" href="{% url 'event_list' %}">Events</a>
             <a class="dropdown-item" href="{% url 'visit_list' %}">Aufenthalte</a>
             <div class="dropdown-divider"></div>
@@ -46,7 +48,7 @@
       <ul class="nav justify-content-end">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">{{ user.username }} <i class="bi bi-person-circle"></i></a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu dropdown-menu-right">
             <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
             <li><hr class="dropdown-divider"></li>
@@ -63,7 +65,7 @@
     <ul class="nav justify-content-end">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><i class="bi bi-person-circle" style="font-size: 1rem; color: rgb(255,255,255);"></i></a>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu dropdown-menu-right">
           <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
           <li><a class="dropdown-item" href="#">Something else here</a></li>
           <li><hr class="dropdown-divider"></li>
@@ -79,45 +81,6 @@
   </div>
 </nav>
 
-<!--nav class="navbar navbar-dark bg-dark">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="{% url 'home' %}">Vesterby</a>
-    </div>
-    {% if user.is_authenticated %}
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="{% url 'detail' %}">detail</a></li>
-      <li><a href="{% url 'expense_list' %}">Finace</a></li>
-    </ul>
-    
-    
-    <ul class="nav navbar-nav navbar-right">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ user.username }} <span class="glyphicon glyphicon-user"></span></a>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-          <li><a class="dropdown-item" href="{% url 'password_reset' %}">Password Reset</a></li>
-        </ul>
-      </li>
-    </ul>
-
-   
-    {% else %}
-
-    <ul class="nav navbar-nav navbar-right">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-          <li><a href="{% url 'signup' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        </ul>
-      </li>
-    </ul>
-
-    {% endif %}
-  </div>
-</nav-->
 {% endblock %}
 
 {%block content %}

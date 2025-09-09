@@ -9,8 +9,9 @@
 <div class="card m-4">
     <h5 class="card-header">{{ object.name }}</h5>
     <div class="card-body">
-      <h5 class="card-title">{{ object.id }}</h5>
-      <p class="card-text">bezahlt</p>
+      {% for share in object.share.all %}
+        <p class="card-text">{{ share.user }} : {{ object.share.count }}</p>
+      {% endfor %}
       <a href="{% url 'costcenter_delete' object.id %}" class="card-link">Löschen</a>
       <a href="{% url 'costcenter_update' object.id %}" class="card-link">Ändern</a>
       <a href="{% url 'costcenter_read' object.id %}" class="card-link">Details</a>

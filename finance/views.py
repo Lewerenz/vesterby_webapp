@@ -14,7 +14,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import CostCenter, Share, Expense
 from users.models import CustomUser
 
-import calendar
+
 
 
 ## CostCenter
@@ -76,10 +76,39 @@ class ShareList(LoginRequiredMixin, ListView):
 
 ## Expense
 # Create
-class ExpenseCreateView(LoginRequiredMixin, CreateView):
-    model = Expense
-    fields = '__all__'
-    success_url = reverse_lazy('expense_list')
+# class ExpenseCreateView(LoginRequiredMixin, CreateView):
+#     model = Expense
+#     fields = '__all__'
+#     success_url = reverse_lazy('expense_list')
+
+from django.forms import ModelForm
+from django.views import View
+from django.http import HttpResponseRedirect
+import datetime
+
+class ArticleForm(ModelForm):
+     class Meta:
+        model = Expense
+        fields = '__all__'
+        #exclude = ('user',)
+
+class ExpenseCreateView(View):
+    form_class = ArticleForm
+    template_name = "templates/finance/costcenter_form.html"
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial={"user": request.user, "date": datetime.datetime.now()})
+        return render(request, self.template_name, {"form": form})
+    
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            # new_expense = form.save(commit=False)
+            # new_expense.user = request.user
+            form.save()
+            return HttpResponseRedirect(reverse_lazy('expense_list'))
+
+        return render(request, self.template_name, {"form": form})
+
 
 # Read
 class ExpenseReadView(LoginRequiredMixin, DetailView):
@@ -111,28 +140,14 @@ class ExpenseList(LoginRequiredMixin, ListView):
 #     # write your view processing logics here
 #     return HttpResponse("Welcome to Dashboard" + str(d.amount))
 
-class CustomHTMLCal(calendar.HTMLCalendar):
-    cssclasses = [style + " text-red" for style in calendar.HTMLCalendar.cssclasses]
-    #cssclasses = ["mon text-bold", "tue", "wed", "thu", "fri", "sat", "sun red"]
-    cssclass_month_head = "text-center month-head"
-    cssclass_month = "text-center month"
-    cssclass_year = "text-center text-italic lead"
-    cssclass_year_head = "table"
 
 
 
+
+
+   
 
 def detail(request):
-
-    kalenderblatt = CustomHTMLCal(calendar.MONDAY)
-    ausgabe = kalenderblatt.formatyear(2025,3)
-
-    for day_number in kalenderblatt.iterweekdays():
-        print(day_number)
-
-    return render(request, 'finance/calendar.html', {'calendar': ausgabe})    
-
-def my_costs(request):
 
     kosten_list = []
 
